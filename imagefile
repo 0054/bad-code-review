@@ -1,0 +1,21 @@
+FROM python as container
+
+
+WORKDIR /var/build
+
+RUN apt install python3 
+RUN apt install python3-pip
+RUN apt install curl
+RUN apt install openssl
+RUN apt install net-tools
+RUN apt-get install python3-pytest
+
+FROM python as image
+
+COPY . /app
+
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+RUN pip freeze
+
+ENTRYPOINT ["main.py"]
